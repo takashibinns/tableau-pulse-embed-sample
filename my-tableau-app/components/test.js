@@ -1,4 +1,6 @@
-import { VegaLite } from 'react-vega'
+import VegaLiteViz from './vegaliteviz';
+//import { avoidLabelCollisions } from './spec';
+
 
 //  sample data
 const spec = {
@@ -594,7 +596,7 @@ const Chart = () => {
         table: spec.data.values
     }
     return (
-        <VegaLite spec={spec} data={spec.data} />
+        <VegaLiteViz height={300} width={600} spec={spec}></VegaLiteViz>
     )
 }
 

@@ -7,15 +7,15 @@ import useSWR from 'swr'
 
 import utilStyles from '../styles/utils.module.css';
 import Stack from '@mui/material/Stack'; 
-import { styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
-import { red } from '@mui/material/colors';
-import { VegaLite } from 'react-vega'
+
+import VegaLiteViz from './vegaliteviz';
+
 
 //  Fetcher function
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -83,6 +83,15 @@ const CardGrid = () => {
         //  Save a reference to this card
         metrics.push(card);
     })
+
+    const renderViz = (spec) => {
+        console.log(spec)
+        if (spec){
+            return <VegaLiteViz height={104} spec={spec}></VegaLiteViz>
+        } else {
+            return <></>
+        }
+    }
     
     //  HTML to render
     return (
@@ -92,21 +101,21 @@ const CardGrid = () => {
                     <Card key={metric.key}>
                         <CardHeader
                         avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} src='/images/tableau.webp' />
+                            <Avatar src='/images/tableau.webp' />
                         }
                         title={metric.title}
                         subheader={metric.subtitle}
                         />
                         { metric.main.map((insight) => (
                             <CardContent key={insight.key} className='main'>
-                                <VegaLite spec={insight.vega?.spec} data={insight.vega?.spec?.data}/>
+                                {renderViz(insight.vega)}
                                 <p dangerouslySetInnerHTML={{__html: insight.markup}} />
                             </CardContent>
                         ))}
                         <Divider />
                         { metric.extra.map((insight) => (
                             <CardContent key={insight.key} className='extra'>
-                                <VegaLite spec={insight.vega?.spec} data={insight.vega?.spec?.data}/>
+                                {renderViz(insight.vega)}
                                 <p dangerouslySetInnerHTML={{__html: insight.markup}} />
                             </CardContent>
                         ))}
