@@ -1,0 +1,17 @@
+/*  Tableau formatting  */
+span[data-type="entity"] {
+    font-weight: 700;
+}
+span[data-type="value"] {
+    font-weight: 700;
+}
+span[data-type="insight-type-keyword"] {
+    font-weight: 700;
+}
+span.MuiCardHeader-title{
+    font-size: larger;
+}
+div.extra {
+    font-size: small;
+    color: gray;
+}
