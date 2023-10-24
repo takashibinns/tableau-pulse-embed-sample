@@ -16,30 +16,47 @@ import Avatar from '@mui/material/Avatar';
 
 import VegaLiteViz from './vegaliteviz';
 
+//  Function to determine if 
+const isEmpty = (obj,propname) => {
+    //  Check for null/undefined object
+    if (!obj) return true;
+    //  Could be an object with no properties
+    if (Object.keys(obj).length == 0) return true;
+    //  Check a property of the object, too
+    if (propname) {
+        if (Object.keys(obj[propname]).length == 0) return true;
+    }
+    //  Passed all the tests, object is not empty
+    return false;
+}
 
-//  Fetcher function
+//  Fetcher function for SWR - executes the FETCH API call, and returns the response's data as JSON
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-//  Function to organize the results
+//  Function to organize the results of an InsightGroup
 const parseInsights = (insightGroup) => {
 
     //  Define 1 or more insights for the main section of the card
     let metrics = [];
     for (let i = 0; i<insightGroup.insights.length; i++) {
-        const insight = insightGroup.insights.length>0 ? insightGroup.insights[0].result : {};
-        const summary = insightGroup.summaries.length>0 ? insightGroup.summaries[0].result : {};
+
+        //  Assume insights/summaries have a single item for now
+        const insight = insightGroup.insights?.[0]?.result;
+        const summary = insightGroup.summaries?.[0]?.result;
   
         if (insight) {
             //  Define the metric's name and markup (from api)
             let myMetric = {
-            key: insight.id,
-            markup: insight.markup,
-            vega: null
+                key: insight.id,
+                markup: insight.markup,
+                vega: null
             }; 
     
-            //  If the metric also has an image, include that oo
-            if (summary && summary.viz && Object.keys(summary.viz).length > 0){
+            //  Sometimes the viz is in the insight, other times it's in the summary
+            if (!isEmpty(summary,'viz')){
                 myMetric.vega = summary.viz;
+            } else if (!isEmpty(insight,'viz')){
+                myMetric.vega = insight.viz;
             }
     
             // Save to an array
@@ -51,6 +68,7 @@ const parseInsights = (insightGroup) => {
     return metrics;
 }
 
+//  
 const CardGrid = () => {
 
     //  Fetch data from the API
@@ -85,7 +103,6 @@ const CardGrid = () => {
     })
 
     const renderViz = (spec) => {
-        console.log(spec)
         if (spec){
             return <VegaLiteViz height={104} spec={spec}></VegaLiteViz>
         } else {
@@ -96,7 +113,7 @@ const CardGrid = () => {
     //  HTML to render
     return (
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+            <Stack spacing={2} direction="row" useFlexGap flexWrap="wrap">
                 { metrics.map((metric) => ( 
                     <Card key={metric.key}>
                         <CardHeader

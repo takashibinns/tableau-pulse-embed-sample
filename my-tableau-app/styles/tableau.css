@@ -1,4 +1,18 @@
+/************************/
 /*  Tableau formatting  */
+/************************/
+
+/*  Card Header         */
+span.MuiCardHeader-title{
+    font-size: larger;
+}
+/*  Card Footer         */
+div.extra {
+    font-size: small;
+    color: gray;
+}
+
+/*  Bold some text from insights  */
 span[data-type="entity"] {
     font-weight: 700;
 }
@@ -8,10 +22,11 @@ span[data-type="value"] {
 span[data-type="insight-type-keyword"] {
     font-weight: 700;
 }
-span.MuiCardHeader-title{
-    font-size: larger;
+
+/*  Color text based on the sentitment */
+span[data-sentiment="positive"]{
+    color: green;
 }
-div.extra {
-    font-size: small;
-    color: gray;
+span[data-sentiment="negative"]{
+    color: red;
 }
