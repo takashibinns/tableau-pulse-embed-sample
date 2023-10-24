@@ -1,3 +1,4 @@
+
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from './layout.module.css';
@@ -6,7 +7,6 @@ import useSWR from 'swr'
 
 import utilStyles from '../styles/utils.module.css';
 import Stack from '@mui/material/Stack'; 
-import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
@@ -17,15 +17,10 @@ import Avatar from '@mui/material/Avatar';
 import { red } from '@mui/material/colors';
 import { VegaLite } from 'react-vega'
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    boxShadow: 'none',
-    color: theme.palette.text.secondary,
-  }));
+//  Fetcher function
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
+//  Function to organize the results
 const parseInsights = (insightGroup) => {
 
     //  Define 1 or more insights for the main section of the card
@@ -34,20 +29,22 @@ const parseInsights = (insightGroup) => {
         const insight = insightGroup.insights.length>0 ? insightGroup.insights[0].result : {};
         const summary = insightGroup.summaries.length>0 ? insightGroup.summaries[0].result : {};
   
-        //  Define the metric's name and markup (from api)
-        let myMetric = {
-          key: insight.id,
-          markup: insight.markup,
-          vega: null
-        }; 
-  
-        //  If the metric also has an image, include that oo
-        if (summary.viz && Object.keys(summary.viz).length > 0){
-          myMetric.vega = summary.viz;
+        if (insight) {
+            //  Define the metric's name and markup (from api)
+            let myMetric = {
+            key: insight.id,
+            markup: insight.markup,
+            vega: null
+            }; 
+    
+            //  If the metric also has an image, include that oo
+            if (summary && summary.viz && Object.keys(summary.viz).length > 0){
+                myMetric.vega = summary.viz;
+            }
+    
+            // Save to an array
+            metrics.push(myMetric)
         }
-  
-        // Save to an array
-        metrics.push(myMetric)
     }
 
     //  Return the array of metrics
@@ -56,12 +53,17 @@ const parseInsights = (insightGroup) => {
 
 const CardGrid = () => {
 
-    const fetcher = (...args) => fetch(...args).then((res) => res.json());
-    const { data, error, isLoading } = useSWR('/api/insights',fetcher,);
+    //  Fetch data from the API
+    const { data } = useSWR('http://localhost:3000/api/insights',fetcher,{
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false
+    });    
 
-    if (error) return <div>Failed to fetch characters.</div>;
-    if (isLoading) return <CircularProgress />;
+    //  What to draw while the API call is running
+    if (!data || data.length==0) return <CircularProgress />;
 
+    //  Parse the data, into a structure we can use
     let metrics = [];
     data.forEach( function(metric, index){    
 
@@ -82,6 +84,7 @@ const CardGrid = () => {
         metrics.push(card);
     })
     
+    //  HTML to render
     return (
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
             <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">

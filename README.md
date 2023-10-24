@@ -27,5 +27,4 @@ npm run dev
 
 
 ## Known Issues
-* something triggers the SWR fetch occationally, so multiple API calls are made when they are not necessary
-* sometimes the results from the /api/insights call come back with partial results
+* Using "use client" in pages or components results in multiple API calls being made, so i removed that flag resulting in server-side rendering
