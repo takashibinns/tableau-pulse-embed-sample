@@ -11,8 +11,8 @@ Sample of how to embed Tableau Insights (Pulse) into a web app
 npx create-next-app@latest my-tableau-app --use-npm --example "https://github.com/vercel/next-learn/tree/main/basics/api-routes-starter"
 #   Change into then app directory
 cd my-tableau-app
-#   Install Material Design UI, vega (for rendering charts), swr (client-side fetching)
-npm install @mui/material @emotion/react @emotion/styled react-vega swr
+#   Install Material Design UI, swr (client-side fetching), uuid (generating unique ids)
+npm install @mui/material @emotion/react @emotion/styled swr uuid
 #   Start dev server
 npm run dev
 ```
