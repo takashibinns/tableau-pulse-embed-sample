@@ -14,7 +14,7 @@ import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 
-import VegaLiteViz from './vegaliteviz';
+import VegaLiteViz from './VegaLiteViz';
 
 //  Function to determine if 
 const isEmpty = (obj,propname) => {
@@ -79,7 +79,7 @@ const CardGrid = () => {
     });    
 
     //  What to draw while the API call is running
-    if (!data || data.length==0) return <CircularProgress />;
+    if (!data || data.length==0) return <CircularProgress style={{'marginLeft':'50%','marginTop':'10%'}} />;
 
     //  Parse the data, into a structure we can use
     let metrics = [];
