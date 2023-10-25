@@ -12,7 +12,7 @@ npx create-next-app@latest my-tableau-app --use-npm --example "https://github.co
 #   Change into then app directory
 cd my-tableau-app
 #   Install Material Design UI, swr (client-side fetching), uuid (generating unique ids)
-npm install @mui/material @emotion/react @emotion/styled swr uuid
+npm install @mui/material @emotion/react @emotion/styled swr uuid vega vega-lite vega-tooltip vega-interpreter
 #   Start dev server
 npm run dev
 ```
