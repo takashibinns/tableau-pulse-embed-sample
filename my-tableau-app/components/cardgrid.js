@@ -89,10 +89,19 @@ const CardGrid = () => {
         const ban = metric.result.insight_groups.filter((ig) => { return ig.type === 'ban' })[0];
         const top = metric.result.insight_groups.filter((ig) => { return ig.type === 'top' })[0];
   
+        //  Figure out the label and value of the metric
+        let value, label;
+        ban.insights.forEach( insight =>{
+            const v = insight.result?.facts?.target_period_value?.formatted;
+            if (v) value = v;
+            const l = insight.result?.facts?.target_time_period?.label;
+            if (l) label = l;
+        })
+
         //  Define the top layer of the card
         let card = {
-            title: metric.title,
-            subtitle: ban.result?.facts?.target_time_period?.label,
+            title: `${metric.title}: ${value}`,
+            subtitle: label,
             key: `tableau-card-${index}`,
             main: parseInsights(ban),
             extra: parseInsights(top)
