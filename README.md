@@ -10,7 +10,7 @@ If you'd like to just deploy this sample web app as-is, you can do so by followi
 git clone https://github.com/takashibinns/tableau-pulse-embed-sample.git
 
 #   Change into the web app directory
-cd my-tableau-app
+cd tableau-pulse-embed-sample/my-tableau-app
 
 #   Install dependencies
 npm install
