@@ -26,6 +26,7 @@ npm run dev
 ```
 
 ## Demo Script
+During the session, we created a scaffolding for our web app.  To get to the same starting point, run the below commands:
 
 ```
 #   Create the project scaffolding
@@ -34,7 +35,7 @@ npx create-next-app@latest my-tableau-app --use-npm --example "https://github.co
 #   Change into then app directory
 cd my-tableau-app
 
-#   Install Material Design UI, swr (client-side fetching), uuid (generating unique ids)
+#   Install Material Design UI, swr (client-side fetching), uuid (generating unique ids), and vega (for rendering vega charts)
 npm install @mui/material @emotion/react @emotion/styled swr uuid vega vega-lite vega-tooltip vega-interpreter
 
 #   Start dev server
@@ -45,10 +46,10 @@ npm run dev
 ## Resources/  Links
 
 * [NextJS](https://nextjs.org/docs)
-* [Component Docs](https://horizon-ui.com/documentation/docs/introduction?ref=readme-horizon-nextjs)
-* [Template Repo](https://github.com/horizon-ui/horizon-ui-chakra-nextjs)
-* [React Vega](https://github.com/vega/react-vega/tree/master/packages/react-vega)
+* [Template Repo](https://github.com/vercel/next-learn/tree/main/basics/api-routes-starter)
+* [Material UI Docs](https://mui.com/material-ui/getting-started/usage/)
+* [Vega Chart Specs](https://vega.github.io/vega/docs/specification/)
 
 
 ## Known Issues
-* Using "use client" in pages or components results in multiple API calls being made, so i removed that flag resulting in server-side rendering
+* Using "use client" in pages or components results in multiple API calls being made, so I removed that flag resulting in server-side rendering
