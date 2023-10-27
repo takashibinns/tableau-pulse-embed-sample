@@ -11,6 +11,9 @@ div.extra {
     font-size: small;
     color: gray;
 }
+div.MuiGrid-item {
+    min-width: 26em;;
+}
 
 /*  Bold some text from insights  */
 span[data-type="entity"] {

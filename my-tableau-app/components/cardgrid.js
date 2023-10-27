@@ -7,6 +7,7 @@ import useSWR from 'swr'
 
 import utilStyles from '../styles/utils.module.css';
 import Stack from '@mui/material/Stack'; 
+import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -122,32 +123,34 @@ const CardGrid = () => {
     //  HTML to render
     return (
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-            <Stack spacing={2} direction="row" useFlexGap flexWrap="wrap">
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
                 { metrics.map((metric) => ( 
-                    <Card key={metric.key}>
-                        <CardHeader
-                        avatar={
-                            <Avatar src='/images/tableau.webp' />
-                        }
-                        title={metric.title}
-                        subheader={metric.subtitle}
-                        />
-                        { metric.main.map((insight) => (
-                            <CardContent key={insight.key} className='main'>
-                                {renderViz(insight.vega)}
-                                <p dangerouslySetInnerHTML={{__html: insight.markup}} />
-                            </CardContent>
-                        ))}
-                        <Divider />
-                        { metric.extra.map((insight) => (
-                            <CardContent key={insight.key} className='extra'>
-                                {renderViz(insight.vega)}
-                                <p dangerouslySetInnerHTML={{__html: insight.markup}} />
-                            </CardContent>
-                        ))}
-                    </Card>
+                    <Grid item xs={2} sm={4} md={4} key={metric.key}>
+                        <Card key={metric.key} >
+                            <CardHeader
+                            avatar={
+                                <Avatar src='/images/tableau.webp' />
+                            }
+                            title={metric.title}
+                            subheader={metric.subtitle}
+                            />
+                            { metric.main.map((insight) => (
+                                <CardContent key={insight.key} className='main'>
+                                    {renderViz(insight.vega)}
+                                    <p dangerouslySetInnerHTML={{__html: insight.markup}} />
+                                </CardContent>
+                            ))}
+                            <Divider />
+                            { metric.extra.map((insight) => (
+                                <CardContent key={insight.key} className='extra'>
+                                    {renderViz(insight.vega)}
+                                    <p dangerouslySetInnerHTML={{__html: insight.markup}} />
+                                </CardContent>
+                            ))}
+                        </Card>
+                    </Grid>
                  )) }
-            </Stack>
+            </Grid>
         </section>
     )
 }
